@@ -10,7 +10,9 @@ Runbook:
 1. replace CSV stub under `csv` with actual CSV contents
 1. execute
 
-**Note:** CSVs with over 500 lines might not fit in a block: split them up.
+**Notes**
+* Contracts deployed to Acala [must be published](https://evmdocs.acala.network/tooling/development-account/publishing-a-smart-contract) before anyone other than their deployer is able to interact
+* CSVs with over 500 lines might not fit in a block: split them up
 
 ```javascript
 const fclTokenContract = {

@@ -6,7 +6,7 @@ async function txParams() {
 
   if (hardhat.network.name === "mandala" || hardhat.network.name === "karura") {
     storageByteDeposit = "100000000000000";
-  } else if (hardhat.network.name === "acala") {
+  } else if (hardhat.network.name === "acala" || hardhat.network.name === "acalaBeta") {
     storageByteDeposit = "300000000000000";
   }
   const txFeePerGas = "199999946752";

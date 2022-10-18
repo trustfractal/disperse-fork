@@ -25,6 +25,7 @@ async function main() {
 
   const abiCoder = new ethers.utils.AbiCoder();
 
+  /*
   const tx = await disperse.disperseEther(
     ["0x0AB572e327178eA8C15c338705811476F78D7A0D","0x6a7eB27407a50a4eb9d015EA2B0F2e1BcC724461"],
     [0.1, 1.2].map((x) => (abiCoder.encode(["uint256"], [ethers.utils.parseEther(x.toString())]))),
@@ -35,6 +36,16 @@ async function main() {
 
   await printBalance("0x0AB572e327178eA8C15c338705811476F78D7A0D");
   await printBalance("0x6a7eB27407a50a4eb9d015EA2B0F2e1BcC724461");
+  */
+
+  //const tx = await fclToken.approve()
+
+  const tx = await disperse.disperseToken(
+    "0x477eBd116029877D108C9054be9d0Da01e85cd27",
+    ["0x0AB572e327178eA8C15c338705811476F78D7A0D","0x6a7eB27407a50a4eb9d015EA2B0F2e1BcC724461"],
+    [0.1, 1.2].map((x) => (abiCoder.encode(["uint256"], [ethers.utils.parseEther(x.toString())]))),
+    { gasPrice, gasLimit },
+  )
 }
 
 main().catch(e => {

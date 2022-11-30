@@ -8771,7 +8771,7 @@ const chainData = {
 async function main() {
   const abiCoder = new ethers.utils.AbiCoder();
 
-  const parsedCsv = csv.split("\n").slice(1,-1).map(s => s.trim().split(","));
+  const parsedCsv = csv.split("\n").slice(1, -1).map(s => s.trim().split(","));
   const recipients = parsedCsv.map(row => row[0]);
   const values = parsedCsv.map(row => row[1]).map(value => ethers.utils.parseEther(value));
   const total = values.reduce((prev, curr) => prev.add(curr), ethers.utils.parseEther("0"));

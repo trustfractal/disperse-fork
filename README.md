@@ -10,8 +10,6 @@ Runbook:
 1. replace CSV stub under `csv` with actual CSV contents
 1. execute
 
-**Note:** CSVs with over 500 lines might not fit in a block: split them up
-
 ```javascript
 const fclTokenContract = {
   address: "0xe68856eb29B2FB39699286CcA7F10f90Ce8AE9De",
@@ -26,6 +24,14 @@ const csv = `
   0x0AB572e327178eA8C15c338705811476F78D7A0D,0.5
   0x6a7eB27407a50a4eb9d015EA2B0F2e1BcC724461,1.5
 `;
+
+Array.prototype.chunks = function (size) {
+  const result = [];
+  for (var i = 0, l = this.length; i < l; i += size) {
+    result.push(this.slice(i, i + size));
+  }
+  return result;
+};
 
 const chainData = {
   chainId: `0x${(100).toString(16)}`,
@@ -82,15 +88,20 @@ async function main() {
   ).connect(signer);
 
   console.log(`Number of recipients: ${recipients.length}`);
-
   console.log(`Total FCL: ${ethers.utils.formatEther(total.toString())}`);
 
-  const tx = await disperse.disperseToken(
-    fclTokenContract.address,
-    recipients,
-    values.map(x => abiCoder.encode(["uint256"], [x])),
-  );
+  // Chunking by 500 to make sure the tx fits in the block.
+  for (const page of parsedCsv.chunks(500)) {
+    const pageRecipients = page.map(row => row[0]);
+    const pageValues = page.map(row => row[1]).map(value => ethers.utils.parseEther(value));
 
-  console.log(tx);
+    const tx = await disperse.disperseToken(
+      fclTokenContract.address,
+      pageRecipients,
+      pageValues.map(x => abiCoder.encode(["uint256"], [x])),
+    );
+
+    console.log(tx);
+  }
 }
 ```

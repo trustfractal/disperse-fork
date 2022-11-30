@@ -8815,7 +8815,7 @@ async function main() {
 
   // Chunking by 500 to make sure the tx fits in the block.
   for (const page of parsedCsv.chunks(500)) {
-    const pageRecipients = page.map(row => row[0]);
+    const pageRecipients = page.map(row => row[0].toLowerCase());
     const pageValues = page.map(row => row[1]).map(value => ethers.utils.parseEther(value));
 
     const tx = await disperse.disperseToken(

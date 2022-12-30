@@ -101,7 +101,7 @@ async function main() {
       pageValues.map(x => abiCoder.encode(["uint256"], [x])),
     );
 
-    console.log(tx);
+    console.log(tx.hash);
   }
 }
 ```
